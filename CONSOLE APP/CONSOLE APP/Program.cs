@@ -10,15 +10,15 @@ Flight[] flights = new Flight[10];
 
 Banner();
 DisplayMenu();
-MenuSelection();
+
 
 
 void Banner()
 {
     Console.WriteLine(topDecoration);
-    Console.WriteLine("|                                                      |");
+    Console.WriteLine(spacerDecoration);
     Console.WriteLine("|             GBC AIRLINES BOOKING SYSTEM              |");
-    Console.WriteLine("|                                                      |");
+    Console.WriteLine(spacerDecoration);
     Console.WriteLine(bottomDecoration);
 }
 
@@ -40,6 +40,7 @@ void DisplayMenu()
     Console.WriteLine("|      5: Exit Application                             |");
     Console.WriteLine(spacerDecoration);
     Console.WriteLine(bottomDecoration);
+    MenuSelection();
 }
 
 void MenuSelection()
@@ -56,7 +57,10 @@ void MenuSelection()
         {
             selectInt = Int32.Parse(selection);
         } catch {
-            Console.WriteLine("||| ERROR! NUMERICAL VALUES ACCEPTED ONLY |||");
+            Console.WriteLine();
+            Console.WriteLine("============================================");
+            Console.WriteLine("     ERROR: PLEASE ENTER A NUMBER ONLY!     ");
+            Console.WriteLine("============================================");
             selectInt = -1;
         }
 
@@ -79,7 +83,7 @@ void MenuSelection()
                 DeleteFlight();
                 break;
             case 6:
-                EndProgram();
+                exitCondition = true;
                 break;
 
         }
@@ -88,7 +92,67 @@ void MenuSelection()
 
 void AddCustomer()
 {
-    // TODO: FINISH THIS FUNCTION
+    for (int i = 0; i < flights.Length; i++)
+    {
+        // determine if there are any flights
+    }
+/*    if (flights.Length == 0)
+    {
+        Console.WriteLine();
+        Console.WriteLine("============================================");
+        Console.WriteLine("     THERE ARE NO FLIGHTS IN THE SYSTEM     ");
+        Console.WriteLine("============================================");
+        return;
+    }*/
+
+    Console.WriteLine();
+    Console.WriteLine(topDecoration);
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine("|            Please enter the flight number            |");
+    Console.WriteLine("|         you would like to add a customer to          |");
+    Console.WriteLine("|                                                      |");
+    Console.WriteLine(bottomDecoration);
+    string flightString = Console.ReadLine();
+    int flightNumber = 0,  match = 0;
+
+    try
+    {
+        flightNumber = Int32.Parse(flightString);
+    } catch
+    {
+        Console.WriteLine();
+        Console.WriteLine("============================================");
+        Console.WriteLine("     ERROR: PLEASE ENTER A NUMBER ONLY!     ");
+        Console.WriteLine("============================================");
+        AddCustomer(); // recursive call instead of doing a while loop
+    }
+
+    foreach (Flight flight in flights)
+    {
+        if (flight.FlightNumber == flightNumber)
+            match = flightNumber;
+    }
+    if (match == 0)
+    {
+        Console.WriteLine();
+        Console.WriteLine("============================================");
+        Console.WriteLine("     There were no flights matching this    ");
+        Console.WriteLine("      flight number. Try again? (Y/N)       ");
+        Console.WriteLine("============================================");
+    }
+    string selection = "";
+    while (selection != "n" && selection != "y" 
+        && selection != "yes" && selection != "no")
+    {
+        selection = Console.ReadLine().ToLower();
+    }
+    if (selection == "y" || selection == "yes")
+    {
+        AddCustomer();
+    } else
+    {
+        DisplayMenu();
+    }
 }
 
 void AddFlight()
