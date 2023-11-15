@@ -1,73 +1,117 @@
 ﻿using CONSOLE_APP;
+using System.Dynamic;
+
+string topDecoration = ".:'''''''''''''''''''''''''''''''''''''''''''''''''''':.",
+    spacerDecoration = "|                                                      |",
+    bottomDecoration = "':....................................................:'";
+
+// Start flights array at 10. Will later be expanded when array is full in AddFlight function
+Flight[] flights = new Flight[10];
+
+Banner();
+DisplayMenu();
+MenuSelection();
 
 
-// TESTING THE GROWING ARRAY. BASE ARRAY IS 10 LONG, THIS PROVES IT HAS EXTENDED TO 30 TO ACCOUNT FOR THE CUSTOMERS
+void Banner()
+{
+    Console.WriteLine(topDecoration);
+    Console.WriteLine("|                                                      |");
+    Console.WriteLine("|             GBC AIRLINES BOOKING SYSTEM              |");
+    Console.WriteLine("|                                                      |");
+    Console.WriteLine(bottomDecoration);
+}
+
+void DisplayMenu()
+{
+    Console.WriteLine();
+    Console.WriteLine();
+    Console.WriteLine(topDecoration);
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine("|                    FLIGHT MENU                       |");
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine("|      Please select a choice from the menu below      |");
+    Console.WriteLine("|      ------------------------------------------      |");
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine("|      1: Add Customer                                 |");
+    Console.WriteLine("|      2: View Flights                                 |");
+    Console.WriteLine("|      3: View a Particular Flight                     |");
+    Console.WriteLine("|      4: Delete Flight                                |");
+    Console.WriteLine("|      5: Exit Application                             |");
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine(bottomDecoration);
+}
+
+void MenuSelection()
+{
+    bool exitCondition = false;
+
+    while (!exitCondition)
+    {
+        int selectInt = -1;
+        Console.WriteLine();
+        Console.Write(" Selection: ");
+        string selection = Console.ReadLine();
+        try
+        {
+            selectInt = Int32.Parse(selection);
+        } catch {
+            Console.WriteLine("||| ERROR! NUMERICAL VALUES ACCEPTED ONLY |||");
+            selectInt = -1;
+        }
 
 
-Flight flight = new Flight(25);
-Console.WriteLine(flight.CustomerListLength());
+        switch (selectInt)
+        {
+            case 1:
+                AddCustomer();
+                break;
+            case 2:
+                AddFlight();
+                break;
+            case 3:
+                ViewAllFlights();
+                break;
+            case 4:
+                ViewSingleFlight();
+                break;
+            case 5:
+                DeleteFlight();
+                break;
+            case 6:
+                EndProgram();
+                break;
 
-Customer cust1 = new Customer(1, "e", "s", "a");
-Customer cust2 = new Customer(1, "e", "s", "a");
-Customer cust3 = new Customer(1, "e", "s", "a");
-Customer cust4 = new Customer(1, "e", "s", "a");
-Customer cust5 = new Customer(1, "e", "s", "a");
-Customer cust6 = new Customer(1, "e", "s", "a");
-Customer cust7 = new Customer(1, "e", "s", "a");
-Customer cust8 = new Customer(1, "e", "s", "a");
-Customer cust9 = new Customer(1, "e", "s", "a");
-Customer cust0 = new Customer(1, "e", "s", "a");
-Customer cust10 = new Customer(1, "e", "s", "a");
-Customer cust11 = new Customer(1, "e", "s", "a");
-Customer cust12 = new Customer(1, "e", "s", "a");
-Customer cust13 = new Customer(1, "e", "s", "a");
-Customer cust14 = new Customer(1, "e", "s", "a");
-Customer cust15 = new Customer(1, "e", "s", "a");
-Customer cust16 = new Customer(1, "e", "s", "a");
-Customer cust17 = new Customer(1, "e", "s", "a");
-Customer cust18 = new Customer(1, "e", "s", "a");
-Customer cust19 = new Customer(1, "e", "s", "a");
-Customer cust20 = new Customer(1, "e", "s", "a");
-Customer cust21 = new Customer(1, "e", "s", "a");
-Customer cust22 = new Customer(1, "e", "s", "a");
-Customer cust23 = new Customer(1, "e", "s", "a");
-Customer cust24 = new Customer(1, "e", "s", "a");
-Customer cust25 = new Customer(1, "e", "s", "a");
-Customer cust26 = new Customer(1, "e", "s", "a");
-Customer cust27 = new Customer(1, "e", "s", "a");
-Customer cust28 = new Customer(1, "e", "s", "a");
-Customer cust29 = new Customer(1, "e", "s", "a");
+        }
+    }
+}
 
-flight.AddCustomer(cust0);
-flight.AddCustomer(cust1);
-flight.AddCustomer(cust2);
-flight.AddCustomer(cust3);
-flight.AddCustomer(cust4);
-flight.AddCustomer(cust5);
-flight.AddCustomer(cust6);
-flight.AddCustomer(cust7);
-flight.AddCustomer(cust8);
-flight.AddCustomer(cust9);
-flight.AddCustomer(cust10);
-flight.AddCustomer(cust11);
-flight.AddCustomer(cust12);
-flight.AddCustomer(cust13);
-flight.AddCustomer(cust14);
-flight.AddCustomer(cust15);
-flight.AddCustomer(cust16);
-flight.AddCustomer(cust17);
-flight.AddCustomer(cust18);
-flight.AddCustomer(cust19);
-flight.AddCustomer(cust20);
-flight.AddCustomer(cust21);
-flight.AddCustomer(cust22);
-flight.AddCustomer(cust23);
-flight.AddCustomer(cust24);
-flight.AddCustomer(cust25);
-flight.AddCustomer(cust26);
-flight.AddCustomer(cust27);
-flight.AddCustomer(cust28);
-flight.AddCustomer(cust29);
+void AddCustomer()
+{
+    // TODO: FINISH THIS FUNCTION
+}
 
+void AddFlight()
+{
+    // TODO: FINISH THIS FUNCTION
+}
 
-Console.WriteLine(flight.CustomerListLength());
+void ViewAllFlights()
+{
+    // TODO: FINISH THIS FUNCTION
+}
+
+void ViewSingleFlight()
+{
+    // TODO: FINISH THIS FUNCTION
+}
+
+void DeleteFlight()
+{
+    // TODO: FINISH THIS FUNCTION
+}
+
+void EndProgram()
+{
+    // TODO: FINISH THIS FUNCTION
+}
