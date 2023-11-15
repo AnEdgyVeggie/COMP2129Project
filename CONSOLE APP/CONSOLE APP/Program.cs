@@ -4,7 +4,7 @@
 // TESTING THE GROWING ARRAY. BASE ARRAY IS 10 LONG, THIS PROVES IT HAS EXTENDED TO 30 TO ACCOUNT FOR THE CUSTOMERS
 
 
-Flight flight = new Flight();
+Flight flight = new Flight(25);
 Console.WriteLine(flight.CustomerListLength());
 
 Customer cust1 = new Customer(1, "e", "s", "a");

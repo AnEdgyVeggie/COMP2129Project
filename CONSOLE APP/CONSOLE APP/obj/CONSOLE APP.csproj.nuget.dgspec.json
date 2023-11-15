@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Honda\\source\\repos\\CONSOLE APP\\CONSOLE APP\\CONSOLE APP.csproj": {}
+    "C:\\Users\\Honda\\Desktop\\SCHOOL\\OOP\\Assignments\\COMP2129Project\\CONSOLE APP\\CONSOLE APP\\CONSOLE APP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Honda\\source\\repos\\CONSOLE APP\\CONSOLE APP\\CONSOLE APP.csproj": {
+    "C:\\Users\\Honda\\Desktop\\SCHOOL\\OOP\\Assignments\\COMP2129Project\\CONSOLE APP\\CONSOLE APP\\CONSOLE APP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Honda\\source\\repos\\CONSOLE APP\\CONSOLE APP\\CONSOLE APP.csproj",
+        "projectUniqueName": "C:\\Users\\Honda\\Desktop\\SCHOOL\\OOP\\Assignments\\COMP2129Project\\CONSOLE APP\\CONSOLE APP\\CONSOLE APP.csproj",
         "projectName": "CONSOLE APP",
-        "projectPath": "C:\\Users\\Honda\\source\\repos\\CONSOLE APP\\CONSOLE APP\\CONSOLE APP.csproj",
+        "projectPath": "C:\\Users\\Honda\\Desktop\\SCHOOL\\OOP\\Assignments\\COMP2129Project\\CONSOLE APP\\CONSOLE APP\\CONSOLE APP.csproj",
         "packagesPath": "C:\\Users\\Honda\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Honda\\source\\repos\\CONSOLE APP\\CONSOLE APP\\obj\\",
+        "outputPath": "C:\\Users\\Honda\\Desktop\\SCHOOL\\OOP\\Assignments\\COMP2129Project\\CONSOLE APP\\CONSOLE APP\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

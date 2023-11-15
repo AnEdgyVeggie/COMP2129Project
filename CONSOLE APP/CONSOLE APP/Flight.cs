@@ -8,19 +8,22 @@ namespace CONSOLE_APP
 {
     internal class Flight
     {
-        // This variable should increment with every instance, and then
-        // the flight number is copied from the reference so that it is automatically
-        // a unique ID
         public static int FlightNumberRef = 1000;
-        public int FlightNumber;
+        public int FlightNumber { get; }
+        public int MaxPassengers { get; set; }
 
         private Customer[] customersList = new Customer[10]; 
 
 
-        public Flight()
+        public Flight(int maxPassengers)
         {
+            // FlightNumberRef should increment with every instance, and then
+            // the flight number is taken from the value so that it is automatically
+            // a unique 4 digit ID
             FlightNumberRef++;
+
             FlightNumber = FlightNumberRef;
+            MaxPassengers = maxPassengers;
         }
 
 
@@ -29,6 +32,7 @@ namespace CONSOLE_APP
         public void AddCustomer(Customer passenger)
         {
             bool extendArray = true;
+
             for (int i = 0; i < customersList.Length; i++) {
                 if (customersList[i] == null)
                 {
@@ -40,12 +44,34 @@ namespace CONSOLE_APP
             }
             if (extendArray)
             {
-                Customer[] tempArray = new Customer[customersList.Length + 5];
-                for (int i = 0; i < customersList.Length; i++) {
-                    tempArray[i] = customersList[i];
+                if (customersList.Length == MaxPassengers)
+                {
+                    Console.WriteLine("MAXIMUM PASSENGER LIMIT HAS BEEN REACHED.");
+                    Console.WriteLine("PLEASE TRY ANOTHER FLIGHT.");
+                    return;
                 }
-                customersList = tempArray;
+                else if (customersList.Length + 5 > MaxPassengers)
+                {
+                    int growth = MaxPassengers - customersList.Length;
+
+                    Customer[] tempArray = new Customer[customersList.Length + growth];
+                    for (int i = 0; i < customersList.Length; i++)
+                    {
+                        tempArray[i] = customersList[i];
+                    }
+                    customersList = tempArray;
+                }
+                else
+                {
+                    Customer[] tempArray = new Customer[customersList.Length + 5];
+                    for (int i = 0; i < customersList.Length; i++)
+                    {
+                        tempArray[i] = customersList[i];
+                    }
+                    customersList = tempArray;
+                }
                 Console.WriteLine("+++++  ARRAY EXTENDED +++++");
+
             }
         }
 
