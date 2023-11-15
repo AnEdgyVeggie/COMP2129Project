@@ -1,34 +1,86 @@
-﻿using System;
+﻿// Amanda Gurney
+// COMP 2129 | CRN: 15646
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CONSOLE_APP
+namespace Group
 {
     internal class Customer
     {
-        public int ID {  get; set; }
+        private int customerID;
         private string firstName;
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-      
+        private string lastName;
+        private string phone;
+        private int numOfBookings;
 
-        private int numberOfBookings = 0;
-
-
-        public Customer(int id, string firstName, string lastName, string phoneNumber) { 
-            ID = id;
-            this.firstName = firstName;
-            LastName = lastName;
-            PhoneNumber = phoneNumber;
-            numberOfBookings++;
+        // Constructor
+        public Customer(string fname, string lname, string phone, int bookings)
+        {
+            customerID = createCustomerID();
+            firstName = fname;
+            lastName = lname;
+            this.phone = phone;
+            numOfBookings = bookings;
         }
 
+        // Set customerID automatically.
 
-        public override string ToString()
+        private int createCustomerID()
         {
-            return this.firstName;
+            Random rnd = new Random();
+            int generatedID = rnd.Next(1, 9999);
+
+            return generatedID;
+        }
+
+        // Accessors
+        public int getCustomerID()
+        {
+            return customerID;
+        }
+        public void setCustomerID(int id)
+        {
+                customerID = id;
+        }
+
+        public string getFirstName()
+        {
+            return firstName;
+        }
+        public void setFirstName(string fName)
+        {
+            firstName = fName;
+        }
+
+        public string getLastName()
+        {
+            return lastName;
+        }
+        public void setLastName(string lName)
+        {
+            lastName = lName;
+        }
+
+        public string getPhone()
+        {
+            return phone;
+        }
+        public void setPhone(string phone)
+        {
+            this.phone = phone;
+        }
+
+        public int getNumOfBookings()
+        {
+            return numOfBookings;
+        }
+        public void setNumOfBookings(int bookings)
+        {
+            numOfBookings = bookings;
         }
     }
 }
