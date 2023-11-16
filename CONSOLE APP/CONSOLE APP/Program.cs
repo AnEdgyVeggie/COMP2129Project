@@ -6,15 +6,19 @@ string topDecoration = ".:'''''''''''''''''''''''''''''''''''''''''''''''''''':.
     bottomDecoration = "':....................................................:'";
 
 
+/* TODO:
+    View Flights, show actual passenger count not size of array (some of the array will be null)
+*/
+
 // Start flights array at 10. Will later be expanded when array is full in AddFlight function
-Flight[] flights = new Flight[10];
+Flight[]? flights = new Flight[4];
 
 Customer customer = new Customer("first", "last", "100", 0);
 
 Flight flight = new Flight(12);
-Flight flight1 = new Flight(12);
-Flight flight2 = new Flight(12);
-Flight flight3 = new Flight(12);
+Flight flight1 = new Flight(10);
+Flight flight2 = new Flight(2);
+Flight flight3 = new Flight(132);
 flights[0] = flight;
 flights[1] = flight1;
 flights[2] = flight2;
@@ -98,7 +102,7 @@ void MenuSelection()
                 DeleteFlight();
                 break;
             case 6:
-                exitCondition = true;
+                EndProgram();
                 break;
             default:
                 Console.WriteLine("   Please pick one of the available options");
@@ -227,7 +231,6 @@ void AddCustomer()
             correctInfo = true;
         }
     }
-    // ccustomerID  |  firstname  |  lastName  |  phone  |  numOfBookings
 
     flight.AddCustomer(new Customer(firstName, lastName, phone, booking));
 }
@@ -239,7 +242,7 @@ void AddFlight()
     Console.WriteLine(topDecoration);
     Console.WriteLine(spacerDecoration);
     Console.WriteLine("|          You are about to add a new flight           |");
-    Console.WriteLine("|                  Continue? (Y/N)                     |");
+    Console.WriteLine("|       Are you sure you want to continue? (Y/N)       |");
     Console.WriteLine(spacerDecoration);
     Console.WriteLine(bottomDecoration);
     Console.WriteLine();
@@ -256,6 +259,53 @@ void AddFlight()
             exitCondition = true;
         }
     }
+
+    exitCondition = false;
+    int maxPass = -1;
+    while (!exitCondition)
+    {
+        Console.WriteLine(topDecoration);
+        Console.WriteLine(spacerDecoration);
+        Console.WriteLine("|           Please specify the maximum amount          |");
+        Console.WriteLine("|                of passengers allowed                 |");
+        Console.WriteLine("| (the default value of 10 will be used if none given) |");
+        Console.WriteLine(spacerDecoration);
+        Console.WriteLine(bottomDecoration);
+        Console.WriteLine();
+        string passengerString = Console.ReadLine();
+        try
+        {
+            maxPass = Int32.Parse(passengerString);
+        } catch
+        {
+            Console.WriteLine();
+            Console.WriteLine("      ============================================");
+            Console.WriteLine("           ERROR: PLEASE ENTER A NUMBER ONLY!     ");
+            Console.WriteLine("      ============================================");
+        }
+        exitCondition = true;
+        if (passengerString == "")
+        {
+            maxPass = 10;
+        }
+    }
+    Flight newFlight = new Flight(maxPass);
+    for (int i = 0; i < flights.Length; i++)
+    {
+        if (flights[i] == null)
+        {
+            flights[i] = newFlight;
+            break;
+        }
+        if (i == flights.Length-1)
+        {
+            ExtendFlights();
+        }
+    }
+    Console.WriteLine();
+    Console.WriteLine("      ============================================");
+    Console.WriteLine("             NEW FLIGHT SUCCESSFULLY ADDED!       ");
+    Console.WriteLine("      ============================================");
 
 }
 
@@ -281,15 +331,143 @@ void ViewAllFlights()
 
 void ViewSingleFlight()
 {
-    // TODO: FINISH THIS FUNCTION
+    int flightNumber = -1;
+
+    while (flightNumber == -1)
+    {
+        Console.WriteLine();
+        Console.WriteLine(topDecoration);
+        Console.WriteLine(spacerDecoration);
+        Console.WriteLine("|            Please enter the flight number            |");
+        Console.WriteLine("|                You would like to view                |");
+        Console.WriteLine(spacerDecoration);
+        Console.WriteLine(bottomDecoration);
+        Console.Write("  Selection:  ");
+        string numberString = Console.ReadLine();
+
+        try
+        {
+            flightNumber = Int32.Parse(numberString);
+        }
+        catch
+        {
+            Console.WriteLine();
+            Console.WriteLine("      ============================================");
+            Console.WriteLine("           ERROR: PLEASE ENTER A NUMBER ONLY!     ");
+            Console.WriteLine("      ============================================");
+        }
+    }
+    for (int i = 0; i < flights.Length; i++)
+    {
+        if (flights[i] != null)
+        {
+            if (flights[i].FlightNumber == flightNumber)
+            {
+                Console.WriteLine();
+                Console.WriteLine(flights[i].ToString());
+                return;
+            } 
+        }
+    }
+    Console.WriteLine();
+    Console.WriteLine("      ============================================");
+    Console.WriteLine("       There were no flights matching this number ");
+    Console.WriteLine("      ============================================");
+    Console.WriteLine();
+    return;
 }
 
 void DeleteFlight()
 {
-    // TODO: FINISH THIS FUNCTION
+    Console.WriteLine();
+    Console.WriteLine(topDecoration);
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine("|          You are about to delete a flight            |");
+    Console.WriteLine("|       Are you sure you want to continue? (Y/N)       |");
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine(bottomDecoration);
+    bool exitCondition = false;
+    while (!exitCondition)
+    {
+        Console.WriteLine();
+        Console.Write("  Selection: ");
+        string selection = Console.ReadLine().ToLower();
+        if (selection == "n" || selection == "no")
+        {
+            return;
+        }
+        if (selection == "y" || selection == "yes")
+        {
+            exitCondition = true;
+        }
+    }
+    exitCondition = false;
+    int deleteNum = -1;
+
+    Console.WriteLine();
+    Console.Write("Enter the flight number you would like to delete: ");
+    string delete = Console.ReadLine();
+    try
+    {
+        deleteNum = Int32.Parse(delete);
+    } catch
+    {
+        Console.WriteLine();
+        Console.WriteLine("      ============================================");
+        Console.WriteLine("           ERROR: PLEASE ENTER A NUMBER ONLY!     ");
+        Console.WriteLine("      ============================================"); 
+    }
+    for( int i = 0; i < flights.Length; i++)
+    {
+        if (flights[i] != null)
+        {
+            if (flights[i].FlightNumber == deleteNum)
+            {
+                while (!exitCondition)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(topDecoration);
+                    Console.WriteLine("|             You are choosing to delete:              |");
+                    Console.WriteLine(flights[i].ToString());
+                    Console.WriteLine("|       Are you sure you want to continue? (Y/N)       |");
+                    Console.WriteLine(bottomDecoration);
+                    Console.WriteLine();
+
+                    Console.Write("  Selection: ");
+                    string selection = Console.ReadLine().ToLower();
+                    if (selection == "n" || selection == "no")
+                    {
+                        return;
+                    }
+                    if (selection == "y" || selection == "yes")
+                    {
+                        exitCondition = true;
+                    }
+                }
+                flights[i] = null;
+            }
+        }
+    }
+    Console.WriteLine();
+    Console.WriteLine($"Flight {deleteNum} deleted successfully!");
 }
 
 void EndProgram()
 {
-    // TODO: FINISH THIS FUNCTION
+    Console.WriteLine(topDecoration);
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine("|                   Have a great day                   |");
+    Console.WriteLine(spacerDecoration);
+    Console.WriteLine(bottomDecoration);
+    Environment.Exit(0);
+}
+
+void ExtendFlights()
+{
+    Flight[] tempFlights = new Flight[flights.Length + 5];
+    for (int i = 0; i < flights.Length; i++)
+    {
+        tempFlights[i] = flights[i];
+    }
+    flights = tempFlights;
 }
