@@ -77,12 +77,8 @@ namespace CONSOLE_APP
 
         public string ToString()
         {
-            string returnString = "";
-            foreach (Customer customer in customersList)
-            {
-                returnString += customer.ToString();
-            }
-            return returnString;
+            return $"|                 Flight Number: {FlightNumber}.                 |\n" +
+                $"|          Number of Passengers: {customersList.Length} out of {MaxPassengers}          |";
         }
         public int CustomerListLength()
         {
