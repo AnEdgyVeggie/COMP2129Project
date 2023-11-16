@@ -1,14 +1,13 @@
-﻿using CONSOLE_APP;
+﻿// Ethan Sylvester | 101479568
+// COMP 2129 | CRN: 15646
+//
+
+using CONSOLE_APP;
 using System.Dynamic;
 
 string topDecoration = ".:'''''''''''''''''''''''''''''''''''''''''''''''''''':.",
     spacerDecoration = "|                                                      |",
     bottomDecoration = "':....................................................:'";
-
-
-/* TODO:
-    View Flights, show actual passenger count not size of array (some of the array will be null)
-*/
 
 // Start flights array at 10. Will later be expanded when array is full in AddFlight function
 Flight[]? flights = new Flight[4];
@@ -233,6 +232,8 @@ void AddCustomer()
     }
 
     flight.AddCustomer(new Customer(firstName, lastName, phone, booking));
+    Console.WriteLine();
+    Console.WriteLine($"       {firstName} {lastName} was added as a custumer.");
 }
 
 void AddFlight()

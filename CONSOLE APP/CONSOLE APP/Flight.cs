@@ -77,12 +77,25 @@ namespace CONSOLE_APP
 
         public string ToString()
         {
-            return $"|                 Flight Number: {FlightNumber}.                 |\n" +
-                $"|          Number of Passengers: {customersList.Length} out of {MaxPassengers}          |";
+            return $"                  Flight Number: {FlightNumber}.                 \n" +
+                $"           Number of Passengers: {GetPassengerCount()} out of {MaxPassengers}          ";
         }
         public int CustomerListLength()
         {
             return customersList.Length; 
+        }
+
+        private int GetPassengerCount()
+        {
+            int count = 0;
+            foreach (Customer customer in customersList)
+            {
+                if (customer != null)
+                {
+                    count++;
+                }
+            }
+            return count;
         }
     }
 }
