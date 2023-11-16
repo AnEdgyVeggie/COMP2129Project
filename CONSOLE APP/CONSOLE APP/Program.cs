@@ -31,6 +31,7 @@ MenuSelection();
 
 void Banner()
 {
+    Console.Clear();
     Console.WriteLine(topDecoration);
     Console.WriteLine(spacerDecoration);
     Console.WriteLine("|             GBC AIRLINES BOOKING SYSTEM              |");
@@ -65,6 +66,7 @@ void MenuSelection()
 
     while (!exitCondition)
     {
+        Banner();
         DisplayMenu();
         int selectInt = -1;
         Console.WriteLine();
@@ -191,6 +193,7 @@ void AddCustomer()
             {
                 Console.Clear();
                 Banner();
+                MenuSelection();
                 return;
             }
         }
@@ -233,7 +236,13 @@ void AddCustomer()
 
     flight.AddCustomer(new Customer(firstName, lastName, phone, booking));
     Console.WriteLine();
-    Console.WriteLine($"       {firstName} {lastName} was added as a custumer.");
+    Console.WriteLine($"     {firstName} {lastName} was added as a customer.");
+    Console.WriteLine();
+    Console.WriteLine("      ============================================");
+    Console.WriteLine("              Press Enter To Return To Menu       ");
+    Console.WriteLine("      ============================================");
+    Console.Read();
+    Console.Clear();
 }
 
 void AddFlight()
@@ -254,10 +263,23 @@ void AddFlight()
         if (selection == "n" || selection == "no")
         {
             return;
-        }
-        if (selection == "y" || selection  == "yes")
+        } else if (selection == "y" || selection  == "yes")
         {
             exitCondition = true;
+        } else
+        {
+            Console.WriteLine();
+            Console.WriteLine("      ============================================");
+            Console.WriteLine("           ERROR: PLEASE ENTER A NUMBER ONLY!     ");
+            Console.WriteLine("      ============================================");
+            Console.WriteLine();
+            Console.WriteLine(topDecoration);
+            Console.WriteLine(spacerDecoration);
+            Console.WriteLine("|          You are about to add a new flight           |");
+            Console.WriteLine("|       Are you sure you want to continue? (Y/N)       |");
+            Console.WriteLine(spacerDecoration);
+            Console.WriteLine(bottomDecoration);
+            Console.WriteLine();
         }
     }
 
@@ -276,18 +298,27 @@ void AddFlight()
         string passengerString = Console.ReadLine();
         try
         {
-            maxPass = Int32.Parse(passengerString);
+            if (passengerString == "")
+            {
+                maxPass = 10;
+            } else
+            {
+                if (Int32.Parse(passengerString) > 0) 
+                {
+                    maxPass = Int32.Parse(passengerString);
+                } else
+                {
+                    maxPass = Int32.Parse(passengerString + "error");
+                }
+            }
+            exitCondition = true;
         } catch
         {
             Console.WriteLine();
             Console.WriteLine("      ============================================");
-            Console.WriteLine("           ERROR: PLEASE ENTER A NUMBER ONLY!     ");
+            Console.WriteLine("        ERROR: PLEASE ENTER A VALID NUMBER ONLY!  ");
             Console.WriteLine("      ============================================");
-        }
-        exitCondition = true;
-        if (passengerString == "")
-        {
-            maxPass = 10;
+            Console.WriteLine();
         }
     }
     Flight newFlight = new Flight(maxPass);
@@ -347,7 +378,7 @@ void ViewSingleFlight()
         string numberString = Console.ReadLine();
 
         try
-        {
+        {   
             flightNumber = Int32.Parse(numberString);
         }
         catch
@@ -366,6 +397,12 @@ void ViewSingleFlight()
             {
                 Console.WriteLine();
                 Console.WriteLine(flights[i].ToString());
+                Console.WriteLine();
+                Console.WriteLine("      ============================================");
+                Console.WriteLine("              Press Enter To Return To Menu       ");
+                Console.WriteLine("      ============================================");
+                Console.Read();
+                Console.Clear();
                 return;
             } 
         }
