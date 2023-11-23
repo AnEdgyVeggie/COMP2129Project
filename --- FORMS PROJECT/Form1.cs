@@ -52,6 +52,7 @@ namespace Group22_Project
             ResultsList.Clear();
 
             String[] flightList;
+            bool flightFound = false;
             if (AllFlightsCheckBox.Checked)
             {
                 foreach (Flight flight in flights)
@@ -59,26 +60,36 @@ namespace Group22_Project
                     if (flight != null)
                     {
                         ResultsList.Text += flight.ToString() + "\n";
+                        flightFound = true;
                     }
+                }
+                if (!flightFound)
+                {
+                    ResultsList.Text = "There are no flights recorded currently.";
                 }
             }
             else
             {
-                
+
                 flightList = FlightList.Text.Split(",");
 
                 if (flightList.Length > 0)
                 {
                     for (int i = 0; i < flightList.Length; i++)
                     {
-                        bool flightFound = false;
-                        foreach(Flight flight in flights) {
-                            if (flightList[i].Trim() == flight.FlightNumber.ToString())
+                        flightFound = false;
+                        foreach (Flight flight in flights)
+                        {
+                            if (flight != null)
                             {
-                                ResultsList.Text += flight.ToString() + "\n";
-                                flightFound = true;
-                                break;
+                                if (flightList[i].Trim() == flight.FlightNumber.ToString())
+                                {
+                                    ResultsList.Text += flight.ToString() + "\n";
+                                    flightFound = true;
+                                    break;
+                                }
                             }
+
                         }
                         if (!flightFound)
                         {
@@ -96,12 +107,14 @@ namespace Group22_Project
             try
             {
                 maxPass = Int32.Parse(MaxPassText.Text);
-            } catch
+            }
+            catch
             {
                 ResultsList.Text = "Please enter only an integer";
                 return;
             }
-            if (Int32.Parse(MaxPassText.Text) <= 0) {
+            if (Int32.Parse(MaxPassText.Text) <= 0)
+            {
                 ResultsList.Text = "Please enter an integer greater than zero";
                 return;
             }
@@ -115,9 +128,9 @@ namespace Group22_Project
                     flights[i] = newFlight;
                     totalFlights++;
                     break;
-                }   
-                    totalFlights++;
-                
+                }
+                totalFlights++;
+
                 if (i == flights.Length - 1)
                 {
 
@@ -131,25 +144,103 @@ namespace Group22_Project
 
         private void button3_Click(object sender, EventArgs e) // Delete Flight
         {
+            int deleteNum = 0;
+            try
+            {
+                deleteNum = Int32.Parse(DelFlightText.Text);
+            }
+            catch
+            {
+                ResultsList.Text = "Please enter an integer only! Flight numbers do not contain letters or symbols.";
+            }
+
+            // cycle through array
+            for (int i = 0; i < flights.Length; i++)
+            {
+                if (flights[i] != null) // null values will not have a flightnumber and cause crash
+                {                       // so they need to be skipped
+                    if (flights[i].FlightNumber == deleteNum)
+                    {
+                        flights[i] = null;
+                        ResultsList.Text = $"Flight {deleteNum} deleted successfully!";
+                        return;
+                    }
+                }
+            }
+
+            ResultsList.Text = $"Deletion Failed! Flight {deleteNum} is not in the system.";
 
         }
 
         private void button4_Click(object sender, EventArgs e) // Add Passenger
         {
+            bool activeFlights = false;
+            for (int i = 0; i < flights.Length; i++)
+            {
+                if (flights[i] != null)
+                {
+                    activeFlights = true;
+                    break;
+                }
+            }
+            if (!activeFlights)
+            {
+                ResultsList.Text = "There are currently no flights to add customers to.";
+                return;
+            }
 
+            Flight? selectedFlight = null;
+
+            string flightString = AddCustFlightNumText.Text;
+
+
+            int flightNumber = 0;
+
+            try
+            {
+                flightNumber = Int32.Parse(flightString);
+            }
+            catch
+            {
+                ResultsList.Text = "Please enter a recorded flight only";
+            }
+
+            foreach (Flight flight in flights)
+            {
+                if (flight != null)
+                {
+                    if (flight.FlightNumber == flightNumber)
+                        selectedFlight = flight;
+                }
+
+            }
+            if (selectedFlight == null)
+            {
+                ResultsList.Text = "There was no flight matching this flight number.";
+
+            }
+
+            string firstName = "", lastName = "", phone = "", bookingString = "";
+
+
+            firstName = AddCustFNameText.Text;
+
+            lastName = AddCustLNameText.Text;
+
+            phone = AddCustPhoneText.Text;
+
+            selectedFlight.AddCustomer(new Customer(firstName, lastName, phone));
+
+            ResultsList.Text = $"{firstName} {lastName} was successfully added to flight {selectedFlight.FlightNumber}";
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e) // Results
-        {
-
-        }
 
         private void richTextBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void ResultsList_TextChanged(object sender, EventArgs e)
+        private void ResultsList_TextChanged(object sender, EventArgs e) // Results
         {
 
         }
@@ -164,6 +255,9 @@ namespace Group22_Project
             flights = tempFlights;
         }
 
+        private void DelFlightText_TextChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }

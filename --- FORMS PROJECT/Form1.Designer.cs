@@ -265,6 +265,7 @@
             DelFlightText.Name = "DelFlightText";
             DelFlightText.Size = new Size(100, 23);
             DelFlightText.TabIndex = 7;
+            DelFlightText.TextChanged += DelFlightText_TextChanged;
             // 
             // label12
             // 
