@@ -1,4 +1,6 @@
 using System.Diagnostics.Eventing.Reader;
+using System.Runtime.ExceptionServices;
+using System.Text.RegularExpressions;
 
 namespace Group22_Project
 {
@@ -231,17 +233,25 @@ namespace Group22_Project
 
             phone = AddCustPhoneText.Text;
 
+            Regex nameReg = new Regex("^[a-zA-Z'-]*$");
+            Regex phoneReg = new Regex("^[0-9]{10}$");
+
             if (firstName == "" || lastName == "")
             {
                 ResultsList.Text = "Please enter a name into both name fields";
                 return;
-            } 
-            if (phone == "")
-            {
-                ResultsList.Text = "Please enter a phone number";
+            } else if (!nameReg.IsMatch(firstName) || !nameReg.IsMatch(lastName)) {
+                ResultsList.Text = "Names can only contain Letters and certain symbols (' and -)";
                 return;
             }
-            selectedFlight.AddCustomer(new Customer(firstName, lastName, phone));
+            if (phone == "" || !phoneReg.IsMatch(phone))
+            {
+                ResultsList.Text = "Please enter a phone number (10 digits only, no symbols)";
+                return;
+            }
+
+            
+            selectedFlight.AddCustomer(new Customer(firstName, lastName, PhoneNumberFormatter(phone)));
 
             ResultsList.Text = $"{firstName} {lastName} was successfully added to flight {selectedFlight.FlightNumber}";
         }
@@ -255,6 +265,18 @@ namespace Group22_Project
         private void ResultsList_TextChanged(object sender, EventArgs e) // Results
         {
 
+        }
+
+        // Only for formatting strings into a nicer phone-number format
+        private string PhoneNumberFormatter(string number)
+        {
+            string first = "", second = "", third = "";
+            for (int i = 0; i < number.Length; i++) {
+                if (i <= 2) first += number[i];
+                else if (i > 2 && i < 6) second += number[i];
+                else third += number[i];
+            }   
+            return $"({first})-{second}-{third}";
         }
 
         void ExtendFlights()
