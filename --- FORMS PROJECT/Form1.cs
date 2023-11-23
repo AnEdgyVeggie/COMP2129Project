@@ -126,18 +126,20 @@ namespace Group22_Project
                 if (flights[i] == null)
                 {
                     flights[i] = newFlight;
-                    totalFlights++;
                     break;
                 }
-                totalFlights++;
 
                 if (i == flights.Length - 1)
                 {
 
                     ExtendFlights();
-
                 }
             }
+            foreach (Flight flight in flights)
+            {
+                if (flight != null) totalFlights++;
+            }
+
             ResultsList.Text = $"New Flight Created Successfully. \nFlight number: {newFlight.FlightNumber}. \nMax Passengers: {maxPass} \nTotal number of active flights: {totalFlights}";
 
         }
@@ -217,7 +219,7 @@ namespace Group22_Project
             if (selectedFlight == null)
             {
                 ResultsList.Text = "There was no flight matching this flight number.";
-
+                return;
             }
 
             string firstName = "", lastName = "", phone = "", bookingString = "";
@@ -229,6 +231,16 @@ namespace Group22_Project
 
             phone = AddCustPhoneText.Text;
 
+            if (firstName == "" || lastName == "")
+            {
+                ResultsList.Text = "Please enter a name into both name fields";
+                return;
+            } 
+            if (phone == "")
+            {
+                ResultsList.Text = "Please enter a phone number";
+                return;
+            }
             selectedFlight.AddCustomer(new Customer(firstName, lastName, phone));
 
             ResultsList.Text = $"{firstName} {lastName} was successfully added to flight {selectedFlight.FlightNumber}";

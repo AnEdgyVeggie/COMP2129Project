@@ -1,9 +1,18 @@
 ﻿// Ethan Sylvester | 101479568
 // COMP 2129 | CRN: 15646
-//
+
+/// This program features a few functions which are used to extend an array
+/// The idea here is that instead of instantiating a flight array or a 
+/// passenger array which could consume unnecessary/unused memory, you 
+/// choose to create a smaller array with the ability to scale it as 
+/// needed. Usually, this would be done using a list, however the 
+/// assignment outlined that lists were not to be used. As the assignment
+/// indicates this should be a professionally built program, we wanted to
+/// make it as efficient and resource conscious as possible.
 
 using CONSOLE_APP;
 using System.Dynamic;
+using System.Runtime.InteropServices;
 
 string topDecoration = ".:'''''''''''''''''''''''''''''''''''''''''''''''''''':.",
     spacerDecoration = "|                                                      |",
@@ -75,6 +84,10 @@ void MenuSelection()
         Console.WriteLine();
         try
         {
+            // you could instead use tryparse to determine if it is parseable (returns bool) and
+            // then use
+            // if (int.TryParse(selection) { selectInt = Int32.Parse(selection); }
+            // but I chose to use try/catch instead.
             selectInt = Int32.Parse(selection);
         } catch {
             Console.WriteLine();
@@ -291,7 +304,6 @@ void AddFlight()
         Console.WriteLine(spacerDecoration);
         Console.WriteLine("|           Please specify the maximum amount          |");
         Console.WriteLine("|                of passengers allowed                 |");
-        Console.WriteLine("| (the default value of 10 will be used if none given) |");
         Console.WriteLine(spacerDecoration);
         Console.WriteLine(bottomDecoration);
         Console.WriteLine();
@@ -389,10 +401,11 @@ void ViewSingleFlight()
             Console.WriteLine("      ============================================");
         }
     }
+    // cycle through flights array
     for (int i = 0; i < flights.Length; i++)
     {
-        if (flights[i] != null)
-        {
+        if (flights[i] != null) // null values will not have a flightnumber and cause crash
+        {                       // so they need to be skipped
             if (flights[i].FlightNumber == flightNumber)
             {
                 Console.WriteLine();
@@ -407,6 +420,7 @@ void ViewSingleFlight()
             } 
         }
     }
+    // if the return isnt hit in the loop, there were no matching flights
     Console.WriteLine();
     Console.WriteLine("      ============================================");
     Console.WriteLine("       There were no flights matching this number ");
@@ -417,6 +431,7 @@ void ViewSingleFlight()
 
 void DeleteFlight()
 {
+    // for deletions, you should make sure that this is the function intended, not to lock people in
     Console.WriteLine();
     Console.WriteLine(topDecoration);
     Console.WriteLine(spacerDecoration);
@@ -439,6 +454,8 @@ void DeleteFlight()
             exitCondition = true;
         }
     }
+
+    // reset exitcondition for reuse
     exitCondition = false;
     int deleteNum = -1;
 
@@ -455,14 +472,16 @@ void DeleteFlight()
         Console.WriteLine("           ERROR: PLEASE ENTER A NUMBER ONLY!     ");
         Console.WriteLine("      ============================================"); 
     }
+
+    // cycle through array
     for( int i = 0; i < flights.Length; i++)
     {
-        if (flights[i] != null)
-        {
+        if (flights[i] != null) // null values will not have a flightnumber and cause crash
+        {                       // so they need to be skipped
             if (flights[i].FlightNumber == deleteNum)
             {
                 while (!exitCondition)
-                {
+                {   // again, you want to be sure of deletions as they are permeneant
                     Console.WriteLine();
                     Console.WriteLine(topDecoration);
                     Console.WriteLine("|             You are choosing to delete:              |");
@@ -497,6 +516,7 @@ void EndProgram()
     Console.WriteLine("|                   Have a great day                   |");
     Console.WriteLine(spacerDecoration);
     Console.WriteLine(bottomDecoration);
+    Console.ReadLine();
     Environment.Exit(0);
 }
 
