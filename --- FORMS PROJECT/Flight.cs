@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Ethan Sylvester 101479568 | Amanda Gurney 101443253 | Taylor Martin 100849882
+// Group MA1 22 | Assignment 2
+// COMP 2129 | CRN: 15646
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +16,7 @@ namespace Group22_Project
         public int FlightNumber { get; }
         public int MaxPassengers { get; set; }
 
-        private Customer[] customersList = new Customer[10];
+        private Customer[] customersArray = new Customer[10];
 
 
         public Flight(int maxPassengers)
@@ -33,42 +37,42 @@ namespace Group22_Project
         {
             bool extendArray = true;
 
-            for (int i = 0; i < customersList.Length; i++)
+            for (int i = 0; i < customersArray.Length; i++)
             {
-                if (customersList[i] == null)
+                if (customersArray[i] == null)
                 {
                     extendArray = false;
-                    customersList[i] = passenger;
+                    customersArray[i] = passenger;
                     break;
 
                 }
             }
             if (extendArray)
             {
-                if (customersList.Length == MaxPassengers)
+                if (customersArray.Length == MaxPassengers)
                 {
                     // MAX CUSTOMERS ACHIEVED. PRINT RESULT. NO MORE CUSTOMERS ALLOWED
                     return;
                 }
-                else if (customersList.Length + 5 > MaxPassengers)
+                else if (customersArray.Length + 5 > MaxPassengers)
                 {
-                    int growth = MaxPassengers - customersList.Length;
+                    int growth = MaxPassengers - customersArray.Length;
 
-                    Customer[] tempArray = new Customer[customersList.Length + growth];
-                    for (int i = 0; i < customersList.Length; i++)
+                    Customer[] tempArray = new Customer[customersArray.Length + growth];
+                    for (int i = 0; i < customersArray.Length; i++)
                     {
-                        tempArray[i] = customersList[i];
+                        tempArray[i] = customersArray[i];
                     }
-                    customersList = tempArray;
+                    customersArray = tempArray;
                 }
                 else
                 {
-                    Customer[] tempArray = new Customer[customersList.Length + 5];
-                    for (int i = 0; i < customersList.Length; i++)
+                    Customer[] tempArray = new Customer[customersArray.Length + 5];
+                    for (int i = 0; i < customersArray.Length; i++)
                     {
-                        tempArray[i] = customersList[i];
+                        tempArray[i] = customersArray[i];
                     }
-                    customersList = tempArray;
+                    customersArray = tempArray;
                 }
 
             }
@@ -77,7 +81,7 @@ namespace Group22_Project
         public string ToString()
         {
             string returnString = $"Flight Number: {FlightNumber}:       Number of Passengers: {GetPassengerCount()} out of {MaxPassengers}\n";
-            foreach (Customer customer in customersList)
+            foreach (Customer customer in customersArray)
             {
                 if (customer !=  null)
                     returnString += customer.ToString() + "\n";
@@ -86,13 +90,13 @@ namespace Group22_Project
         }
         public int CustomerListLength()
         {
-            return customersList.Length;
+            return customersArray.Length;
         }
 
         private int GetPassengerCount()
         {
             int count = 0;
-            foreach (Customer customer in customersList)
+            foreach (Customer customer in customersArray)
             {
                 if (customer != null)
                 {
@@ -101,23 +105,9 @@ namespace Group22_Project
             }
             return count;
         }
-
-        public void LoadExampleFlight()
+        public Customer[] GetCustomerArray()
         {
-            AddCustomer(new Customer("Ethan", "Sylvester", "(123)-456-7890"));
-            AddCustomer(new Customer("Amanda", "Gurney", "(098)-765-4321"));
-            AddCustomer(new Customer("Taylor", "Martin", "(555)-123-4567"));
-            AddCustomer(new Customer("Houman", "Haji", "(555)-987-6541"));
-            AddCustomer(new Customer("Andrew", "Rudder", "(555)-654-9874"));
-            for (int i = 0; i < 10; i++)
-            {
-                customersList[0].IncrementBookings();
-                if (i > 9) { customersList[1].IncrementBookings(); }
-                if (i > 7) { customersList[2].IncrementBookings(); }
-                if (i > 3) { customersList[3].IncrementBookings(); }
-                if (i > 4) { customersList[4].IncrementBookings(); }
-            }
+            return customersArray;
         }
-
     }
 }

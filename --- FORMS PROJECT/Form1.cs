@@ -1,3 +1,7 @@
+// Ethan Sylvester 101479568 | Amanda Gurney 101443253 | Taylor Martin 100849882
+// Group MA1 22 | Assignment 2
+// COMP 2129 | CRN: 15646
+
 using System.Diagnostics.Eventing.Reader;
 using System.Runtime.ExceptionServices;
 using System.Text.RegularExpressions;
@@ -15,11 +19,37 @@ namespace Group22_Project
             new Flight(56),
         };
 
+        List<Customer> customersList = new List<Customer>();  // this is going to work as a pseudo customers database
 
+        public void SetExampleData()
+        {
+            // presetting 5 names into the 'customers database'
+            customersList.Add(new Customer("Ethan", "Sylvester", "(123)-456-7890"));
+            customersList.Add(new Customer("Amanda", "Gurney", "(098)-765-4321"));
+            customersList.Add(new Customer("Taylor", "Martin", "(555)-123-4567"));
+            customersList.Add(new Customer("Houman", "Haji", "(555)-987-6541"));
+            customersList.Add(new Customer("Andrew", "Rudder", "(555)-654-9874"));
+
+            // presetting 1 flight with 5 customers
+            for (int i = 0; i < 5; i++)
+            {
+                flights[0].AddCustomer(customersList[i]);
+            }
+
+            // randomly setting the customers booking numbers so that data isnt just one's
+            for (int i = 0; i < 10; i++)
+            {
+                customersList[0].IncrementBookings();
+                if (i > 9) { customersList[1].IncrementBookings(); }
+                if (i > 7) { customersList[2].IncrementBookings(); }
+                if (i > 3) { customersList[3].IncrementBookings(); }
+                if (i > 4) { customersList[4].IncrementBookings(); }
+            }
+        }
 
         private void InitializeProgram() // This function initializes flights to preload customers into one of the flights.
         {
-            flights[0].LoadExampleFlight();
+            SetExampleData(); // For demoing software only, disable in enterprise edition
         }
 
 
@@ -250,8 +280,33 @@ namespace Group22_Project
                 return;
             }
 
-            
-            selectedFlight.AddCustomer(new Customer(firstName, lastName, PhoneNumberFormatter(phone)));
+            Customer tryCustomer = (new Customer(firstName, lastName, PhoneNumberFormatter(phone)));
+            Customer[] tempFlight = selectedFlight.GetCustomerArray();
+
+
+            for (int i = 0; i < customersList.Count; i++)
+            {
+                if (tryCustomer.FirstName == customersList[i].FirstName && tryCustomer.LastName == customersList[i].LastName)
+                {
+                    foreach (Customer cust in tempFlight)
+                    {
+                        if (cust != null && cust.FirstName == tryCustomer.FirstName && cust.LastName == tryCustomer.LastName)
+                        {
+                            ResultsList.Text = $"{firstName} {lastName} has already been added to this flight";
+                            return;
+                        }
+                    }
+
+                    customersList[i].IncrementBookings();
+                    selectedFlight.AddCustomer(customersList[i]);
+                    ResultsList.Text = $"{customersList[i].FirstName} {customersList[i].LastName} was successfully added to flight {selectedFlight.FlightNumber}\n" +
+                    $"Nice to see you back, enjoy your flight.";
+                    return;
+                } 
+            }
+
+            customersList.Add(tryCustomer);
+            selectedFlight.AddCustomer(tryCustomer);
 
             ResultsList.Text = $"{firstName} {lastName} was successfully added to flight {selectedFlight.FlightNumber}";
         }

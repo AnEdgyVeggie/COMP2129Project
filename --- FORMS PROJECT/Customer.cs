@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+// Ethan Sylvester 101479568 | Amanda Gurney 101443253 | Taylor Martin 100849882
+// Group MA1 22 | Assignment 2
+// COMP 2129 | CRN: 15646
+
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
