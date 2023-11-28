@@ -19,33 +19,8 @@ namespace Group22_Project
             new Flight(56),
         };
 
-        List<Customer> customersList = new List<Customer>();  // this is going to work as a pseudo customers database
+        List<Customer?> customersList = new List<Customer>();  // this is going to work as a pseudo customers database
 
-        public void SetExampleData()
-        {
-            // presetting 5 names into the 'customers database'
-            customersList.Add(new Customer("Ethan", "Sylvester", "(123)-456-7890"));
-            customersList.Add(new Customer("Amanda", "Gurney", "(098)-765-4321"));
-            customersList.Add(new Customer("Taylor", "Martin", "(555)-123-4567"));
-            customersList.Add(new Customer("Houman", "Haji", "(555)-987-6541"));
-            customersList.Add(new Customer("Andrew", "Rudder", "(555)-654-9874"));
-
-            // presetting 1 flight with 5 customers
-            for (int i = 0; i < 5; i++)
-            {
-                flights[0].AddCustomer(customersList[i]);
-            }
-
-            // randomly setting the customers booking numbers so that data isnt just one's
-            for (int i = 0; i < 10; i++)
-            {
-                customersList[0].IncrementBookings();
-                if (i > 9) { customersList[1].IncrementBookings(); }
-                if (i > 7) { customersList[2].IncrementBookings(); }
-                if (i > 3) { customersList[3].IncrementBookings(); }
-                if (i > 4) { customersList[4].IncrementBookings(); }
-            }
-        }
 
         private void InitializeProgram() // This function initializes flights to preload customers into one of the flights.
         {
@@ -57,26 +32,6 @@ namespace Group22_Project
         {
             InitializeComponent();
             InitializeProgram();
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e) // DisplayFlightsBtn
@@ -138,14 +93,14 @@ namespace Group22_Project
             int maxPass = 0;
             try
             {
-                maxPass = Int32.Parse(MaxPassText.Text);
+                maxPass = int.Parse(MaxPassText.Text);
             }
             catch
             {
                 ResultsList.Text = "Please enter only an integer";
                 return;
             }
-            if (Int32.Parse(MaxPassText.Text) <= 0)
+            if (int.Parse(MaxPassText.Text) <= 0)
             {
                 ResultsList.Text = "Please enter an integer greater than zero";
                 return;
@@ -181,7 +136,7 @@ namespace Group22_Project
             int deleteNum = 0;
             try
             {
-                deleteNum = Int32.Parse(DelFlightText.Text);
+                deleteNum = int.Parse(DelFlightText.Text);
             }
             catch
             {
@@ -195,6 +150,12 @@ namespace Group22_Project
                 {                       // so they need to be skipped
                     if (flights[i].FlightNumber == deleteNum)
                     {
+                        if (flights[i].GetPassengerCount() > 0)
+                        {
+                            ResultsList.Text = $"Flight {deleteNum} currently has passengers. Can not delete a flight if it has passengers!";
+                            return;
+                        }
+
                         flights[i] = null;
                         ResultsList.Text = $"Flight {deleteNum} deleted successfully!";
                         return;
@@ -230,14 +191,8 @@ namespace Group22_Project
 
             int flightNumber = 0;
 
-            try
-            {
-                flightNumber = Int32.Parse(flightString);
-            }
-            catch
-            {
-                ResultsList.Text = "Please enter a recorded flight only";
-            }
+            int.TryParse(flightString, out flightNumber);
+
 
             foreach (Flight flight in flights)
             {
@@ -248,10 +203,10 @@ namespace Group22_Project
                 }
 
             }
-            if (selectedFlight == null)
+            Customer?[] tempFlight = null;
+            if (selectedFlight != null)
             {
-                ResultsList.Text = "There was no flight matching this flight number.";
-                return;
+                tempFlight = selectedFlight.GetCustomerArray();
             }
 
             string firstName = "", lastName = "", phone = "", bookingString = "";
@@ -270,7 +225,9 @@ namespace Group22_Project
             {
                 ResultsList.Text = "Please enter a name into both name fields";
                 return;
-            } else if (!nameReg.IsMatch(firstName) || !nameReg.IsMatch(lastName)) {
+            }
+            else if (!nameReg.IsMatch(firstName) || !nameReg.IsMatch(lastName))
+            {
                 ResultsList.Text = "Names can only contain Letters and certain symbols (' and -)";
                 return;
             }
@@ -281,11 +238,13 @@ namespace Group22_Project
             }
 
             Customer tryCustomer = (new Customer(firstName, lastName, PhoneNumberFormatter(phone)));
-            Customer[] tempFlight = selectedFlight.GetCustomerArray();
+
 
 
             for (int i = 0; i < customersList.Count; i++)
             {
+                if (customersList[i] == null) continue;
+
                 if (tryCustomer.FirstName == customersList[i].FirstName && tryCustomer.LastName == customersList[i].LastName)
                 {
                     foreach (Customer cust in tempFlight)
@@ -302,19 +261,20 @@ namespace Group22_Project
                     ResultsList.Text = $"{customersList[i].FirstName} {customersList[i].LastName} was successfully added to flight {selectedFlight.FlightNumber}\n" +
                     $"Nice to see you back, enjoy your flight.";
                     return;
-                } 
+                }
             }
 
-            customersList.Add(tryCustomer);
-            selectedFlight.AddCustomer(tryCustomer);
-
-            ResultsList.Text = $"{firstName} {lastName} was successfully added to flight {selectedFlight.FlightNumber}";
-        }
-
-
-        private void richTextBox2_TextChanged(object sender, EventArgs e)
-        {
-
+            if (flightNumber != 0)
+            {
+                customersList.Add(tryCustomer);
+                selectedFlight.AddCustomer(tryCustomer);
+                ResultsList.Text = $"{firstName} {lastName} was successfully added to flight {selectedFlight.FlightNumber}";
+            } else
+            {
+                customersList.Add(tryCustomer);
+                ResultsList.Text = $"{firstName} {lastName} was successfully added to the customers database";
+            }
+            
         }
 
         private void ResultsList_TextChanged(object sender, EventArgs e) // Results
@@ -322,17 +282,113 @@ namespace Group22_Project
 
         }
 
+        private void ListCustomerBtn_Click(object sender, EventArgs e) // list customers
+        {
+            ResultsList.Clear();
+            foreach (Customer cust in customersList)
+            {
+                if (cust == null) continue;
+                ResultsList.Text += $"{cust.CustomerID} -- {cust.FirstName} {cust.LastName} -- {cust.PhoneNumber}\n";
+            }
+        }
+
+        private void delCustomerBtn_Click(object sender, EventArgs e) // delete customer
+        {
+            int customerID = 0;
+            try
+            {
+                customerID = int.Parse(customerIDbox.Text);
+            }
+            catch
+            {
+                ResultsList.Text = "Please enter only an integer into the Customer ID box.";
+            }
+            for (int i = 0; i < customersList.Count; i++)
+            {
+                if (customersList[i] != null)
+                {
+                    if (customersList[i].CustomerID == customerID)
+                    {
+                        if (SearchFlights(customersList[i]))
+                        {
+                            ResultsList.Text = "Can not delete customers who are on an active flight!";
+                            return;
+
+                        }
+                        else
+                        {
+                            ResultsList.Text = $"{customersList[i].FirstName} {customersList[i].LastName} -- ID: {customersList[i].CustomerID} has been removed from the system";
+                            customersList[i] = null;
+                            return;
+                        }
+                    }
+                }
+            }
+            ResultsList.Text = "The customer you are searching for could not be found. Please check the identification number.";
+        }
+
+
+ /*
+         ||||||||||||||||||||||||||
+         ||| NON-FORM FUNCTIONS |||
+         ||||||||||||||||||||||||||
+ */
+        public void SetExampleData()
+        {
+            // presetting 5 names into the 'customers database'
+            customersList.Add(new Customer("Ethan", "Sylvester", "(123)-456-7890"));
+            customersList.Add(new Customer("Amanda", "Gurney", "(098)-765-4321"));
+            customersList.Add(new Customer("Taylor", "Martin", "(555)-123-4567"));
+            customersList.Add(new Customer("Houman", "Haji", "(555)-987-6541"));
+            customersList.Add(new Customer("Andrew", "Rudder", "(555)-654-9874"));
+
+            // presetting 1 flight with 5 customers
+            for (int i = 0; i < 3; i++)
+            {
+                flights[0].AddCustomer(customersList[i]);
+            }
+
+            // randomly setting the customers booking numbers so that data isnt just one's
+            for (int i = 0; i < 10; i++)
+            {
+                customersList[0].IncrementBookings();
+                if (i > 9) { customersList[1].IncrementBookings(); }
+                if (i > 7) { customersList[2].IncrementBookings(); }
+                if (i > 3) { customersList[3].IncrementBookings(); }
+                if (i > 4) { customersList[4].IncrementBookings(); }
+            }
+        }
+
+
+        private bool SearchFlights(Customer cust)
+        {
+            foreach (Flight flight in flights)
+            {
+                foreach (Customer customer in flight.GetCustomerArray())
+                {
+                    if (customer == null) continue;
+                    if (customer.CustomerID == cust.CustomerID)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         // Only for formatting strings into a nicer phone-number format
         private string PhoneNumberFormatter(string number)
         {
             string first = "", second = "", third = "";
-            for (int i = 0; i < number.Length; i++) {
+            for (int i = 0; i < number.Length; i++)
+            {
                 if (i <= 2) first += number[i];
                 else if (i > 2 && i < 6) second += number[i];
                 else third += number[i];
-            }   
+            }
             return $"({first})-{second}-{third}";
         }
+
 
         void ExtendFlights()
         {
@@ -342,11 +398,6 @@ namespace Group22_Project
                 tempFlights[i] = flights[i];
             }
             flights = tempFlights;
-        }
-
-        private void DelFlightText_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

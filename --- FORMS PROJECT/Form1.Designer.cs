@@ -35,6 +35,12 @@
             FlightList = new RichTextBox();
             label5 = new Label();
             AllFlightsCheckBox = new CheckBox();
+            panel6 = new Panel();
+            delCustomerBtn = new Button();
+            customerIDbox = new TextBox();
+            label13 = new Label();
+            label14 = new Label();
+            ListCustomerBtn = new Button();
             panel2 = new Panel();
             AddPassBtn = new Button();
             AddCustPhoneText = new TextBox();
@@ -61,6 +67,7 @@
             ResultsList = new RichTextBox();
             label10 = new Label();
             panel1.SuspendLayout();
+            panel6.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel4.SuspendLayout();
@@ -72,7 +79,7 @@
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(12, 13);
+            label1.Location = new Point(14, -2);
             label1.Name = "label1";
             label1.Size = new Size(290, 32);
             label1.TabIndex = 1;
@@ -87,14 +94,14 @@
             panel1.Controls.Add(label5);
             panel1.Controls.Add(AllFlightsCheckBox);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(68, 235);
+            panel1.Location = new Point(439, 251);
             panel1.Name = "panel1";
-            panel1.Size = new Size(319, 317);
+            panel1.Size = new Size(319, 256);
             panel1.TabIndex = 2;
             // 
             // DisplayFlightsBtn
             // 
-            DisplayFlightsBtn.Location = new Point(100, 259);
+            DisplayFlightsBtn.Location = new Point(114, 199);
             DisplayFlightsBtn.Name = "DisplayFlightsBtn";
             DisplayFlightsBtn.Size = new Size(83, 39);
             DisplayFlightsBtn.TabIndex = 9;
@@ -110,7 +117,6 @@
             FlightList.Size = new Size(255, 70);
             FlightList.TabIndex = 5;
             FlightList.Text = "";
-            FlightList.TextChanged += richTextBox2_TextChanged;
             // 
             // label5
             // 
@@ -120,22 +126,83 @@
             label5.Size = new Size(171, 30);
             label5.TabIndex = 4;
             label5.Text = "Flight Number(s)  \r\nEnter Comma Separated Values";
-            label5.Click += label5_Click;
             // 
             // AllFlightsCheckBox
             // 
             AllFlightsCheckBox.AutoSize = true;
-            AllFlightsCheckBox.Location = new Point(26, 199);
+            AllFlightsCheckBox.Location = new Point(26, 177);
             AllFlightsCheckBox.Name = "AllFlightsCheckBox";
             AllFlightsCheckBox.Size = new Size(78, 19);
             AllFlightsCheckBox.TabIndex = 2;
             AllFlightsCheckBox.Text = "All Flights";
             AllFlightsCheckBox.UseVisualStyleBackColor = true;
             // 
+            // panel6
+            // 
+            panel6.BackColor = Color.Gainsboro;
+            panel6.BorderStyle = BorderStyle.FixedSingle;
+            panel6.Controls.Add(delCustomerBtn);
+            panel6.Controls.Add(customerIDbox);
+            panel6.Controls.Add(label13);
+            panel6.Controls.Add(label14);
+            panel6.Location = new Point(-1, 286);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(319, 200);
+            panel6.TabIndex = 10;
+            // 
+            // delCustomerBtn
+            // 
+            delCustomerBtn.Location = new Point(105, 107);
+            delCustomerBtn.Name = "delCustomerBtn";
+            delCustomerBtn.Size = new Size(83, 39);
+            delCustomerBtn.TabIndex = 7;
+            delCustomerBtn.Text = "Delete Customer";
+            delCustomerBtn.UseVisualStyleBackColor = true;
+            delCustomerBtn.Click += delCustomerBtn_Click;
+            // 
+            // customerIDbox
+            // 
+            customerIDbox.Location = new Point(182, 67);
+            customerIDbox.Name = "customerIDbox";
+            customerIDbox.Size = new Size(100, 23);
+            customerIDbox.TabIndex = 7;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(32, 70);
+            label13.Name = "label13";
+            label13.Size = new Size(73, 15);
+            label13.TabIndex = 6;
+            label13.Text = "Customer ID";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.BackColor = Color.Transparent;
+            label14.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.Location = new Point(55, 10);
+            label14.Name = "label14";
+            label14.Size = new Size(204, 32);
+            label14.TabIndex = 1;
+            label14.Text = "Delete Customers";
+            // 
+            // ListCustomerBtn
+            // 
+            ListCustomerBtn.Location = new Point(21, 213);
+            ListCustomerBtn.Name = "ListCustomerBtn";
+            ListCustomerBtn.Size = new Size(114, 40);
+            ListCustomerBtn.TabIndex = 8;
+            ListCustomerBtn.Text = "List Customers";
+            ListCustomerBtn.UseVisualStyleBackColor = true;
+            ListCustomerBtn.Click += ListCustomerBtn_Click;
+            // 
             // panel2
             // 
             panel2.BackColor = Color.Gainsboro;
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(ListCustomerBtn);
+            panel2.Controls.Add(panel6);
             panel2.Controls.Add(AddPassBtn);
             panel2.Controls.Add(AddCustPhoneText);
             panel2.Controls.Add(AddCustLNameText);
@@ -146,14 +213,14 @@
             panel2.Controls.Add(label7);
             panel2.Controls.Add(label6);
             panel2.Controls.Add(label2);
-            panel2.Location = new Point(818, 235);
+            panel2.Location = new Point(818, 132);
             panel2.Name = "panel2";
-            panel2.Size = new Size(319, 317);
+            panel2.Size = new Size(319, 487);
             panel2.TabIndex = 3;
             // 
             // AddPassBtn
             // 
-            AddPassBtn.Location = new Point(100, 259);
+            AddPassBtn.Location = new Point(193, 214);
             AddPassBtn.Name = "AddPassBtn";
             AddPassBtn.Size = new Size(83, 39);
             AddPassBtn.TabIndex = 9;
@@ -163,28 +230,28 @@
             // 
             // AddCustPhoneText
             // 
-            AddCustPhoneText.Location = new Point(162, 195);
+            AddCustPhoneText.Location = new Point(158, 174);
             AddCustPhoneText.Name = "AddCustPhoneText";
             AddCustPhoneText.Size = new Size(120, 23);
             AddCustPhoneText.TabIndex = 9;
             // 
             // AddCustLNameText
             // 
-            AddCustLNameText.Location = new Point(162, 152);
+            AddCustLNameText.Location = new Point(158, 134);
             AddCustLNameText.Name = "AddCustLNameText";
             AddCustLNameText.Size = new Size(120, 23);
             AddCustLNameText.TabIndex = 8;
             // 
             // AddCustFNameText
             // 
-            AddCustFNameText.Location = new Point(162, 108);
+            AddCustFNameText.Location = new Point(158, 96);
             AddCustFNameText.Name = "AddCustFNameText";
             AddCustFNameText.Size = new Size(120, 23);
             AddCustFNameText.TabIndex = 7;
             // 
             // AddCustFlightNumText
             // 
-            AddCustFlightNumText.Location = new Point(162, 62);
+            AddCustFlightNumText.Location = new Point(158, 59);
             AddCustFlightNumText.Name = "AddCustFlightNumText";
             AddCustFlightNumText.Size = new Size(120, 23);
             AddCustFlightNumText.TabIndex = 6;
@@ -192,7 +259,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(25, 198);
+            label9.Location = new Point(21, 177);
             label9.Name = "label9";
             label9.Size = new Size(88, 15);
             label9.TabIndex = 5;
@@ -201,7 +268,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(25, 65);
+            label8.Location = new Point(21, 62);
             label8.Name = "label8";
             label8.Size = new Size(84, 15);
             label8.TabIndex = 4;
@@ -210,7 +277,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(25, 155);
+            label7.Location = new Point(21, 137);
             label7.Name = "label7";
             label7.Size = new Size(63, 15);
             label7.TabIndex = 3;
@@ -219,7 +286,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(25, 108);
+            label6.Location = new Point(21, 99);
             label6.Name = "label6";
             label6.Size = new Size(64, 15);
             label6.TabIndex = 2;
@@ -230,7 +297,7 @@
             label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
             label2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(70, 10);
+            label2.Location = new Point(75, -1);
             label2.Name = "label2";
             label2.Size = new Size(167, 32);
             label2.TabIndex = 1;
@@ -244,14 +311,14 @@
             panel3.Controls.Add(DelFlightText);
             panel3.Controls.Add(label12);
             panel3.Controls.Add(label3);
-            panel3.Location = new Point(-1, 201);
+            panel3.Location = new Point(3, 232);
             panel3.Name = "panel3";
-            panel3.Size = new Size(319, 187);
+            panel3.Size = new Size(319, 233);
             panel3.TabIndex = 5;
             // 
             // DelFlightNum
             // 
-            DelFlightNum.Location = new Point(100, 143);
+            DelFlightNum.Location = new Point(106, 144);
             DelFlightNum.Name = "DelFlightNum";
             DelFlightNum.Size = new Size(83, 39);
             DelFlightNum.TabIndex = 7;
@@ -261,16 +328,15 @@
             // 
             // DelFlightText
             // 
-            DelFlightText.Location = new Point(169, 74);
+            DelFlightText.Location = new Point(174, 97);
             DelFlightText.Name = "DelFlightText";
             DelFlightText.Size = new Size(100, 23);
             DelFlightText.TabIndex = 7;
-            DelFlightText.TextChanged += DelFlightText_TextChanged;
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(21, 77);
+            label12.Location = new Point(26, 100);
             label12.Name = "label12";
             label12.Size = new Size(84, 15);
             label12.TabIndex = 6;
@@ -281,7 +347,7 @@
             label3.AutoSize = true;
             label3.BackColor = Color.Transparent;
             label3.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(79, 9);
+            label3.Location = new Point(74, 32);
             label3.Name = "label3";
             label3.Size = new Size(151, 32);
             label3.TabIndex = 1;
@@ -296,14 +362,14 @@
             panel4.Controls.Add(label11);
             panel4.Controls.Add(panel3);
             panel4.Controls.Add(label4);
-            panel4.Location = new Point(441, 181);
+            panel4.Location = new Point(68, 153);
             panel4.Name = "panel4";
-            panel4.Size = new Size(319, 389);
+            panel4.Size = new Size(319, 466);
             panel4.TabIndex = 4;
             // 
             // AddFlightBtn
             // 
-            AddFlightBtn.Location = new Point(100, 146);
+            AddFlightBtn.Location = new Point(101, 139);
             AddFlightBtn.Name = "AddFlightBtn";
             AddFlightBtn.Size = new Size(83, 39);
             AddFlightBtn.TabIndex = 8;
@@ -326,7 +392,6 @@
             label11.Size = new Size(123, 15);
             label11.TabIndex = 2;
             label11.Text = "Maximum Passengers";
-            label11.Click += label11_Click;
             // 
             // label4
             // 
@@ -338,7 +403,6 @@
             label4.Size = new Size(124, 32);
             label4.TabIndex = 1;
             label4.Text = "Add Flight";
-            label4.Click += label4_Click;
             // 
             // richTextBox1
             // 
@@ -346,7 +410,7 @@
             richTextBox1.BorderStyle = BorderStyle.None;
             richTextBox1.Font = new Font("Bahnschrift", 36F, FontStyle.Bold, GraphicsUnit.Point);
             richTextBox1.ForeColor = Color.White;
-            richTextBox1.Location = new Point(97, 52);
+            richTextBox1.Location = new Point(81, 52);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.Size = new Size(1444, 88);
             richTextBox1.TabIndex = 6;
@@ -384,7 +448,6 @@
             label10.Size = new Size(137, 50);
             label10.TabIndex = 1;
             label10.Text = "Results";
-            label10.Click += label10_Click;
             // 
             // Form1
             // 
@@ -395,9 +458,9 @@
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1214, 928);
             Controls.Add(panel5);
+            Controls.Add(panel2);
             Controls.Add(richTextBox1);
             Controls.Add(panel4);
-            Controls.Add(panel2);
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximumSize = new Size(1230, 967);
@@ -406,6 +469,8 @@
             Text = "GBC Airlines Booking Information System";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
@@ -449,5 +514,12 @@
         private Button DisplayFlightsBtn;
         private Button AddPassBtn;
         private RichTextBox ResultsList;
+        private Panel panel6;
+        private Button delCustomerBtn;
+        private TextBox customerIDbox;
+        private Label label13;
+        private Label label14;
+        private Button ListCustomerBtn;
+        private Label label15;
     }
 }

@@ -93,7 +93,7 @@ namespace Group22_Project
             return customersArray.Length;
         }
 
-        private int GetPassengerCount()
+        public int GetPassengerCount()
         {
             int count = 0;
             foreach (Customer customer in customersArray)
